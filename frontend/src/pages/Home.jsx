@@ -21,7 +21,8 @@ const Home = () => {
         const response = await axios.get(
           "https://hari-book-store.onrender.com/books"
         );
-        setBooks(response.data.data);
+        const ans = await response.json();
+        setBooks(ans.data);
         setLoading(false);
       } catch (error) {
         console.log(error);

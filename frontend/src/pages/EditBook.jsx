@@ -19,9 +19,10 @@ const EditBook = () => {
       setLoading(true)
       try {
         const response = await axios.get(`https://hari-book-store.onrender.com/books/${id}`)
-        setTitle(response.data.title)
-        setAuthor(response.data.author)
-        setPublishYear(response.data.publishYear)
+        const daa = await response.json();
+        setTitle(daa.title)
+        setAuthor(daa.author)
+        setPublishYear(daa.publishYear)
         setLoading(false)
       } catch (error) {
         console.log(error)

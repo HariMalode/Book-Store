@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import BackButton from '../components/BackButton';
 import Spinner from '../components/Spinner';
+import { resolve } from 'path';
 
 const ShowBook = () => {
   const { id } = useParams();
@@ -15,7 +16,8 @@ const ShowBook = () => {
       setLoading(true);
       try {
         const response = await axios.get(`https://hari-book-store.onrender.com/books/${id}`);
-        setBook(response.data);
+        const data = await response.json();
+        setBook(data);
         setLoading(false);
       } catch (error) {
         console.log(error);
