@@ -12,7 +12,7 @@ const ShowBook = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`https://hari-book-store.onrender.com/books/${id}`)
+     axios.get(`https://hari-book-store.onrender.com/books/${id}`)
       .then(response => {
         setBook(response.data);
         setLoading(false);
