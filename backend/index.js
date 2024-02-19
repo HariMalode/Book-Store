@@ -1,12 +1,25 @@
 import express from "express";
-import { PORT, MONGODB_URI } from "./config.js";
 import mongoose from "mongoose";
 import {Book} from "./models/bookModel.js";
 import booksRoute from "./routes/booksRoute.js";
 import cors from "cors";
+import dotenv from "dotenv";
+dotenv.config();
+
+import path from "path";
+
+//for deployment
+const __dirname = path.resolve();
+console.log(__dirname);
+
 
 const app = express();
 app.use(express.json());
+
+app.use(express.static(path.join(__dirname, "frontend/dist")));
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+})
 
 //Middleware for handling CORS Policy
 //option1: Allow all origins with Default of cors(*)
@@ -33,7 +46,7 @@ app.use("/books", booksRoute);
 
 
 mongoose
-    .connect(MONGODB_URI)
+    .connect(process.env.MONGODB_URI)
     .then(() => {
         console.log("Connected to MongoDB");
      })
@@ -44,6 +57,6 @@ mongoose
 
 
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+app.listen(process.env.PORT , () => {
+    console.log(`Server is running on port ${process.env.PORT}`);
 })

@@ -33,6 +33,17 @@ run: npm i axios react-icons
 
 npm i notistack for alert msg
 
+deployment process:
+npm i dotenv and package.json shift to main folder
+insert in main file index.js
+const __dirname = path.resolve(); in main folder
+app.use(express.static(path.join(__dirname, "frontend/dist")));
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+})
+
+insert in package.json: "build":"npm install && npm install --prefix frontend && npm run build --prefix frontend"
+
 Steps:
 
  Create Node.js project from scratch
