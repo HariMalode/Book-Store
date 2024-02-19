@@ -17,7 +17,7 @@ const EditBook = () => {
 
   useEffect(() => {
     setLoading(true)
-    axios.get(`http://localhost:3000/books/${id}`)
+    axios.get(`https://hari-book-store.onrender.com/books/${id}`)
      .then(response => {
         setTitle(response.data.title)
         setAuthor(response.data.author)
@@ -38,7 +38,7 @@ const EditBook = () => {
       publishYear
     }
     setLoading(true)
-    axios.put(`http://localhost:3000/books/${id}`,data)
+    axios.put(`https://hari-book-store.onrender.com/books/${id}`,data)
     .then(()=>{
       setLoading(false)
       enqueueSnackbar('Book Updated Successfully',{variant:'success'})
