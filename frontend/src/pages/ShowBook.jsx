@@ -11,18 +11,21 @@ const ShowBook = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    setLoading(true);
-     axios.get(`https://hari-book-store.onrender.com/books/${id}`)
-      .then(response => {
+    const fetchBook = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(`https://hari-book-store.onrender.com/books/${id}`);
         setBook(response.data);
         setLoading(false);
-      })
-      .catch(error => {
+      } catch (error) {
         console.log(error);
         setError(error.message); // Set error state
         setLoading(false);
-      });
-  }, []); // Dependency array
+      }
+    };
+
+    fetchBook();
+  }, [id]); // Dependency array
 
   return (
     <div className="p-4">

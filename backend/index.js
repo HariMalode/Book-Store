@@ -16,24 +16,26 @@ console.log(__dirname);
 const app = express();
 app.use(express.json());
 
+
 app.use(express.static(path.join(__dirname, "frontend/dist")));
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
 })
 
+
 //Middleware for handling CORS Policy
 //option1: Allow all origins with Default of cors(*)
-app.use(cors());
+// app.use(cors());
 
 //option2: Allow only specific origins
-// app.use(
-//     cors({
-//         origin: "http://localhost:3000",
-//         methods: ["GET", "POST", "PUT", "DELETE"],
-//         allowedHeaders: ["Content-Type"]
-//     })
+app.use(
+    cors({
+        origin: "https://hari-book-store.onrender.com",
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        allowedHeaders: ["Content-Type"]
+    })
 
-// )
+)
 
 app.get("/", (req, res) => {
     console.log("Request received for /");
