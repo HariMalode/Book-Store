@@ -4,7 +4,7 @@ import {AiOutlineEdit} from'react-icons/ai'
 import {BsInfoCircle} from'react-icons/bs'
 import {MdOutlineAddBox, MdOutlineDelete} from 'react-icons/md'
 
-const BooksTable = async({books}) => {
+const BooksTable = ({books}) => {
   return (
     <table className="w-full border-separate border-spacing-2">
       <thead>
@@ -26,7 +26,7 @@ const BooksTable = async({books}) => {
 
       <tbody>
         {/* Iterate over books array and render table rows */}
-        {await books.map((book, index) => {
+        { books.map((book, index) => {
           return (
             <tr key={book._id} className="h-8">
               <td className="border border-slate-700 rounded-md text-center">
