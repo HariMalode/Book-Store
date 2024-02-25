@@ -29,14 +29,10 @@ app.use(cors());
 //     })
 // )
 
-app.get("/", (req, res) => {
-    console.log("Request received for /");
-    res.status(234).send("Welcome to Book Store App");
-    
-})
+
 
 //Here we are using the booksRoute object that we have created in routes folder
-app.use("/books", booksRoute);
+app.use("/", booksRoute);
 
 //for deployment
 const __dirname = path.resolve();
