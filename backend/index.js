@@ -7,19 +7,13 @@ dotenv.config();
 
 import path from "path";
 
-//for deployment
-const __dirname = path.resolve();
-console.log(__dirname);
+
 
 
 const app = express();
 app.use(express.json());
 
 
-app.use(express.static(path.join(__dirname, "frontend/dist")));
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
-})
 
 
 //Middleware for handling CORS Policy
@@ -44,6 +38,13 @@ app.get("/", (req, res) => {
 //Here we are using the booksRoute object that we have created in routes folder
 app.use("/books", booksRoute);
 
+//for deployment
+const __dirname = path.resolve();
+console.log(__dirname);
+app.use(express.static(path.join(__dirname, "frontend/dist")));
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+})
 
 mongoose
     .connect(process.env.MONGODB_URI)
