@@ -32,7 +32,7 @@ app.use(cors());
 
 
 //Here we are using the booksRoute object that we have created in routes folder
-app.use("/", booksRoute);
+app.use("/books", booksRoute);
 
 //for deployment
 
