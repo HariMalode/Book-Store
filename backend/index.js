@@ -24,15 +24,16 @@ app.use(cors());
 //     })
 
 // )
-
-app.get("/", (req, res) => {
-    console.log("Request received for /");
-    res.status(234).send("Welcome to Book Store App");
-    
-})
-
-//Here we are using the booksRoute object that we have created in routes folder
+// ROUTES
 app.use("/books", booksRoute);
+
+// DEPLOYMENT
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, "frontend/dist")));
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+})
+//Here we are using the booksRoute object that we have created in routes folder
 
 
 mongoose
