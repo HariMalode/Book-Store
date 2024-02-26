@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+import { useState, useEffect } from 'react'
 import BackButton from '../components/BackButton'
 import Spinner from '../components/Spinner'
 import axios from 'axios'
@@ -11,52 +12,51 @@ const EditBook = () => {
   const [publishYear, setPublishYear] = useState('')
   const [loading, setLoading] = useState(false)
   const Navigate = useNavigate()
-  const { id } = useParams()
+  const { id } = useParams();
   const { enqueueSnackbar } = useSnackbar()
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true)
-      try {
-        const response = await axios.get(`https://hari-book-store.onrender.com/books/${id}`)
-        const daa = await response.json();
-        setTitle(daa.title)
-        setAuthor(daa.author)
-        setPublishYear(daa.publishYear)
-        setLoading(false)
-      } catch (error) {
+    setLoading(true)
+    axios.get(`http://localhost:3000/books/${id}`)
+     .then(response => {
+        setTitle(response.data.title)
+        setAuthor(response.data.author)
+        setPublishYear(response.data.publishYear)
+        setLoading(false);
+      })
+     .catch(error => {
         console.log(error)
         setLoading(false)
         alert("Error while fetching the book")
-      }
-    }
-    fetchData()
-  }, [id])
+      })
+  },[]) // Dependency array imp
 
-  const handleEditBook = async () => {
-    const data = {
+  const handleEditBook = () => {
+    const data={
       title,
       author,
       publishYear
     }
     setLoading(true)
-    try {
-      await axios.put(`https://hari-book-store.onrender.com/books/${id}`, data)
+    axios.put(`http://localhost:3000/books/${id}`,data)
+    .then(()=>{
       setLoading(false)
-      enqueueSnackbar('Book Updated Successfully', { variant: 'success' })
+      enqueueSnackbar('Book Updated Successfully',{variant:'success'})
       Navigate('/')
-    } catch (error) {
+     })
+    .catch(error => {
       console.log(error)
       setLoading(false)
-      enqueueSnackbar('Error while updating the book', { variant: 'error' })
+      // alert("Error while updating the book")
+      enqueueSnackbar('Error while updating the book',{variant:'error'})
+    })
     }
-  }
 
   return (
     <div className='p-4'>
-      <BackButton />
+      <BackButton/>
       <h1 className='text-3xl my-4'>Edit Book</h1>
-      {loading ? <Spinner /> : ''}
+      {loading? <Spinner /> : ''}
 
       <div className='flex flex-col border-2 border-sky-400 rounded-xl w-[600px] p-4 mx-auto'>
         <div className='my-4'>
@@ -91,13 +91,14 @@ const EditBook = () => {
             required
           />
         </div>
-
+        
         <button className='p-2 bg-sky-300 m-8' onClick={handleEditBook}>
           Save Book
         </button>
       </div>
     </div>
   )
+
 }
 
 export default EditBook

@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import BackButton from '../components/BackButton';
 import Spinner from '../components/Spinner';
-import { resolve } from 'path';
 
 const ShowBook = () => {
   const { id } = useParams();
@@ -12,22 +11,18 @@ const ShowBook = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchBook = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(`https://hari-book-store.onrender.com/books/${id}`);
-        const data = await response.json();
-        setBook(data);
+    setLoading(true);
+    axios.get(`http://localhost:3000/books/${id}`)
+      .then(response => {
+        setBook(response.data);
         setLoading(false);
-      } catch (error) {
+      })
+      .catch(error => {
         console.log(error);
         setError(error.message); // Set error state
         setLoading(false);
-      }
-    };
-
-    fetchBook();
-  }, [id]); // Dependency array
+      });
+  }, []); // Dependency array
 
   return (
     <div className="p-4">

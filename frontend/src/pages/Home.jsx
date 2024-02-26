@@ -15,40 +15,32 @@ const Home = () => {
   const [showType, setShowType] = useState("table");
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(
-          "https://hari-book-store.onrender.com/books"
-        );
-        const ans = await response.json();
-        setBooks(ans.data);
+    setLoading(true);
+    axios
+      .get("http://localhost:3000/books")
+      .then((response) => {
+        setBooks(response.data.data);
         setLoading(false);
-      } catch (error) {
+      })
+      .catch((error) => {
         console.log(error);
         setLoading(false);
-      }
-    };
-
-    fetchData();
+      });
   }, []);
 
   return (
     <div className="p-4">
       <div className="flex justify-center items-center gap-x-4">
         <button
-          className={` hover:bg-sky-600 px-4 py-1 rounded-lg ${
-            showType === "table" ? "bg-sky-600" : "bg-sky-300"
-          }`}
+          className={` hover:bg-sky-600 px-4 py-1 rounded-lg ${showType === "table" ? 'bg-sky-600' : 'bg-sky-300'}`}
           onClick={() => setShowType("table")}
+        
         >
           Table
         </button>
 
         <button
-          className={` hover:bg-sky-600 px-4 py-1 rounded-lg ${
-            showType === "card" ? "bg-sky-600" : "bg-sky-300"
-          }`}
+          className={` hover:bg-sky-600 px-4 py-1 rounded-lg ${showType === "card" ? 'bg-sky-600' : 'bg-sky-300'}`}
           onClick={() => setShowType("card")}
         >
           Card
