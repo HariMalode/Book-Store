@@ -1,4 +1,5 @@
 import express from "express";
+import path from "path";
 // import { PORT, MONGODB_URI } from "./config.js";
 import dotenv from "dotenv";
 dotenv.config();
