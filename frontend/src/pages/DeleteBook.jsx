@@ -14,7 +14,7 @@ const DeleteBook = () => {
 
   const handleDeleteBook = () => {
     setLoading(true)
-    axios.delete(`https://hari-book-store.onrender.com//books/${id}`)
+    axios.delete(`https://hari-book-store.onrender.com/books/${id}`)
      .then(() => {
         setLoading(false)
         enqueueSnackbar('Book Deleted Successfully', { variant:'success' })
